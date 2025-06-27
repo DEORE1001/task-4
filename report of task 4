@@ -52,11 +52,11 @@ netsh advfirewall firewall add rule name="Block_TCP_8080" dir=in action=block pr
 
 ## 8. Firewall Traffic Filtering Summary
 A firewall filters network traffic by:
-- Examining each packet's characteristics (source/destination IP, port, protocol)
+- Examining each packet's characteristics (192.168.1.42, 22, telnet)
 - Comparing against defined rules (allow/block/ask)
 - Making decisions based on rule order (first match applies)
 - Stateful firewalls track connection state for smarter filtering
-- Can filter inbound (to your system) and outbound (from your system) traffic
+- Can filter inbound  and outbound (from your system) traffic
 - Uses predefined security profiles (Public/Private/Domain) for different environments
 
 The firewall acts as a gatekeeper, preventing unauthorized access while permitting legitimate communication according to configured rules.
