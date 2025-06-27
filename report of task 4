@@ -1,0 +1,62 @@
+# Firewall Configuration Report
+
+## 1. Opening Windows Firewall Configuration Tool
+- Accessed Windows Firewall by:
+  - Opening Control Panel > System and Security > Windows Defender Firewall
+  - Or using `wf.msc` command in Run dialog (Win+R)
+
+## 2. Listing Current Firewall Rules
+- Viewed current rules by:
+  - Clicking "Advanced settings" in left pane
+  - Navigated to "Inbound Rules" and "Outbound Rules" sections
+  - Current rules displayed with name, profile, enabled status, and action
+
+## 3. Adding a Block Rule for Specific Port
+- Blocked inbound traffic on port 8080 (example port):
+  1. In Advanced Settings, right-clicked "Inbound Rules"
+  2. Selected "New Rule"
+  3. Chose "Port" rule type
+  4. Selected "TCP" and entered "8080" in specific ports
+  5. Chose "Block the connection"
+  6. Applied to all profiles (Domain, Private, Public)
+  7. Named rule "Block_TCP_8080_Inbound"
+
+## 4. Testing the Block Rule
+- Tested the rule by:
+  - Setting up a test web server on port 8080 (using Python: `python -m http.server 8080`)
+  - Attempted to access from another machine using `telnet [IP] 8080`
+  - Connection failed as expected
+  - Verified in Windows Firewall logs that connection was blocked
+
+## 6. Removing the Test Block Rule
+- Removed the rule by:
+  - Locating "Block_TCP_8080_Inbound" in Inbound Rules list
+  - Right-clicking and selecting "Delete"
+  - Confirmed deletion
+  - Tested connection again - now successful
+
+## 7. Documentation of Steps
+```
+GUI Steps:
+1. Control Panel > Windows Defender Firewall > Advanced settings
+2. Right-click Inbound Rules > New Rule
+3. Select Port > Next
+4. Select TCP, enter 8080 > Next
+5. Select Block connection > Next
+6. Check all profiles > Next
+7. Name rule "Block_TCP_8080_Inbound" > Finish
+
+Command Alternative:
+netsh advfirewall firewall add rule name="Block_TCP_8080" dir=in action=block protocol=TCP localport=8080
+```
+
+## 8. Firewall Traffic Filtering Summary
+A firewall filters network traffic by:
+- Examining each packet's characteristics (source/destination IP, port, protocol)
+- Comparing against defined rules (allow/block/ask)
+- Making decisions based on rule order (first match applies)
+- Stateful firewalls track connection state for smarter filtering
+- Can filter inbound (to your system) and outbound (from your system) traffic
+- Uses predefined security profiles (Public/Private/Domain) for different environments
+
+The firewall acts as a gatekeeper, preventing unauthorized access while permitting legitimate communication according to configured rules.
